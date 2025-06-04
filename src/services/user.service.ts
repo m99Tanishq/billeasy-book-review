@@ -41,19 +41,22 @@ export const createUserService = async ({email, hashedPassword, name, clientId}:
 };
 
 export const updateUserService = async (
-  id: number,
+  userId: number,
   userData: PartialUserUpdate
 ) => {
   const updatedUser = await db
     .update(user)
     .set(userData)
-    .where(eq(user.id, id))
+    .where(eq(user.userId, userId))
     .returning();
   return updatedUser[0];
 };
 
-export const deleteUserService = async (id: number) => {
-  const deletedUser = await db.delete(user).where(eq(user.id, id)).returning();
+export const deleteUserService = async (userId: number) => {
+  const deletedUser = await db
+    .delete(user)
+    .where(eq(user.userId, userId))
+    .returning();
   return deletedUser[0];
 };
 

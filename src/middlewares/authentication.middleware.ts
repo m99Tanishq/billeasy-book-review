@@ -9,6 +9,8 @@ import { Response } from "express";
 //Extending request interface to include authentication data
 declare module "express-serve-static-core" {
   interface Request {
+    clientId: number;
+    userId: number;
     token: string;
     email: string;
     name: string;
@@ -17,6 +19,8 @@ declare module "express-serve-static-core" {
 
 export type TokenPayload = {
   email: string;
+  clientId: number;
+  userId: number;
   name: string;
   exp: number;
 };
@@ -50,5 +54,7 @@ export const authenticationMiddleware = asyncHandler(async (req: Request, res: R
   req.token = token;
   req.email = decodedToken.email;
   req.name = decodedToken.name;
+  req.clientId = decodedToken.clientId;
+  req.userId = decodedToken.userId;
   next();
 });

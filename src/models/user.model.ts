@@ -2,14 +2,16 @@ import {
   pgTable,
   timestamp,
   varchar,
-  serial,
   integer,
+  serial,
+  uuid,
 } from "drizzle-orm/pg-core";
 import { client } from "./client.model";
 import { relations } from "drizzle-orm";
 
 export const user = pgTable("users", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: serial("user_id").notNull(),
   name: varchar("name").notNull(),
   email: varchar("email").notNull(),
   password: varchar("password").notNull(),

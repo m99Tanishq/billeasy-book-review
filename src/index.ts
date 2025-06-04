@@ -3,7 +3,7 @@ import cors from "cors";
 import express from "express";
 import { SERVER_PORT } from "./config/constants";
 import { errorHandler } from "./middlewares/error.middleware";
-import { routes } from "./routes/index.routes";
+import { routes } from "./routes/index.route";
 
 const app = express();
 
