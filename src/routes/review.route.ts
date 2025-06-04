@@ -5,8 +5,8 @@ import { reviewSchema } from "../validators/review.schema";
 
 export const reviewRoutes = Router();
 
-reviewRoutes.post("/reviews", zodValidator(reviewSchema), createReviewForBookController);
+reviewRoutes.post("/:bookId", zodValidator(reviewSchema), createReviewForBookController);
 
-reviewRoutes.put("/reviews/:reviewId", zodValidator(reviewSchema), updateReviewForBookController);
+reviewRoutes.put("/:bookId/:reviewId", zodValidator(reviewSchema), updateReviewForBookController);
 
-reviewRoutes.delete("/reviews/:bookId/:reviewId", deleteReviewForBookController);
+reviewRoutes.delete("/:bookId/:reviewId", deleteReviewForBookController);
