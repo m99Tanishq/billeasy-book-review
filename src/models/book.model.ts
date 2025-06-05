@@ -18,18 +18,19 @@ export const genreEnum = pgEnum("genre", [
   "Thriller",
   "Romance",
   "Technology",
-]);
+] as const);
+
+export type BookGenre = (typeof genreEnum.enumValues)[number];
 
 export const books = pgTable(
   "books",
   {
-    id: uuid("id").primaryKey().defaultRandom(),
-    bookId: serial("book_id").notNull(),
+    id: uuid("id").unique().defaultRandom(),
+    bookId: serial("book_id").primaryKey(),
     title: varchar("title", { length: 200 }).notNull(),
     author: varchar("author", { length: 100 }).notNull(),
     description: text("description").notNull(),
     genre: genreEnum("genre").notNull(),
-    publicationDate: timestamp("publication_date").notNull(),
     publisher: varchar("publisher", { length: 100 }).notNull(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),

@@ -11,22 +11,26 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 import { books } from "./book.model";
-import { user } from "./user.model";
+import { user } from "./user.model"; // Changed from 'user' to 'users'
 import { relations } from "drizzle-orm";
 
 export const readingStatusEnum = pgEnum("reading_status", [
   "read",
   "currently-reading",
   "want-to-read",
-]);
+] as const);
 
 export const reviews = pgTable(
   "reviews",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    userId: integer("user_id").references(() => user.userId).notNull(), // FK to users
-    bookId: integer("book_id").references(() => books.bookId).notNull(), // FK to books
-    rating: integer("rating").notNull(), // 1-5
+    userId: integer("user_id")
+      .references(() => user.userId)
+      .notNull(),
+    bookId: integer("book_id")
+      .references(() => books.bookId)
+      .notNull(),
+    rating: integer("rating").notNull(),
     title: varchar("title", { length: 100 }).notNull(),
     content: text("content").notNull(),
     isEdited: boolean("is_edited").notNull().default(false),
@@ -38,8 +42,10 @@ export const reviews = pgTable(
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (table) => ({
-    userBookUnique: uniqueIndex("user_book_unique_idx")
-      .on(table.userId, table.bookId),
+    userBookUnique: uniqueIndex("user_book_unique_idx").on(
+      table.userId,
+      table.bookId
+    ),
     bookIdx: index("book_idx").on(table.bookId),
     userIdx: index("user_idx").on(table.userId),
     ratingIdx: index("rating_idx").on(table.rating),

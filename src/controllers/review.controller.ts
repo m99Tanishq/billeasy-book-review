@@ -7,7 +7,7 @@ import { asyncHandler } from "../helpers/asyncHandler";
 
 export const createReviewForBookController = asyncHandler(async (req, res) => {
   const { rating, title, content, readingStatus } = req.body;
-  const { bookId, userId } = req.query;
+  const { bookId, userId } = req.params;
   const review = await createReviewForBookService({
     bookId,
     userId,

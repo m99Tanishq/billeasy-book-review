@@ -10,7 +10,6 @@ import {
   createUserService,
 } from "../services/user.service";
 import { Request, Response } from "express";
-
 export const loginController = asyncHandler(
   async (req: Request, res: Response) => {
     const { email, password }: LoginSchema = req.body;
@@ -31,7 +30,7 @@ export const loginController = asyncHandler(
         name: user.name,
       },
       JWT_SECRET,
-      { expiresIn: "168h" }
+      { expiresIn: "1h" }
     );
     res
       .status(200)
@@ -59,3 +58,4 @@ export const signUpController = asyncHandler(async (req, res) => {
     .status(200)
     .json({ success: true, email: newUser.email, name: newUser.name });
 });
+

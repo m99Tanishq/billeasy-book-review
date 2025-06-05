@@ -1,3 +1,4 @@
+import { BookGenre } from './../models/book.model';
 import { Request, Response } from "express";
 import {
   getAllBooksByAuthorAndTitleService,
@@ -10,10 +11,10 @@ import { asyncHandler } from "../helpers/asyncHandler";
 
 export const getAllPaginatedBooksByAuthorAndTitleController = asyncHandler(
   async (req: Request, res: Response) => {
-    const { author, title, limit = 10, page = 1 } = req.query;
+    const { author, genre, limit = 10, page = 1 } = req.query;
     const result = await getAllBooksByAuthorAndTitleService({
       author: author as string | "",
-      title: title as string | "",
+      genre: genre as BookGenre | undefined,
       limit: Number(limit),
       page: Number(page),
     });
@@ -23,7 +24,8 @@ export const getAllPaginatedBooksByAuthorAndTitleController = asyncHandler(
 
 export const getBookByIdWithPaginatedReviewsController = asyncHandler(
   async (req: Request, res: Response) => {
-    const { bookId, limit = 10, page = 1 } = req.query;
+    const { limit = 10, page = 1 } = req.query;
+    const { bookId } = req.params;
     const result = await getBookByIdWithPaginatedReviewsService({
       bookId: Number(bookId),
       limit: Number(limit),
@@ -35,14 +37,13 @@ export const getBookByIdWithPaginatedReviewsController = asyncHandler(
 
 export const createBookController = asyncHandler(
   async (req: Request, res: Response) => {
-    const { title, author, description, genre, publicationDate, publisher } =
+    const { title, author, description, genre, publisher } =
       req.body;
     const result = await createBookService({
       title,
       author,
       description,
       genre,
-      publicationDate,
       publisher,
     });
     res.status(200).json(result);
@@ -51,14 +52,13 @@ export const createBookController = asyncHandler(
 
 export const updateBookController = asyncHandler(
   async (req: Request, res: Response) => {
-    const { bookId, title, description, genre, publicationDate, publisher } =
+    const { bookId, title, description, genre, publisher } =
       req.body;
     const result = await updateBookService({
       bookId: Number(bookId),
       title,
       description,
       genre,
-      publicationDate,
       publisher,
     });
     res.status(200).json(result);

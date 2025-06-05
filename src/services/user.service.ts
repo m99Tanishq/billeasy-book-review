@@ -4,13 +4,13 @@ import { user, PartialUserUpdate } from "../models/user.model";
 
 export const findUserByEmailService = async (
   email: string,
-  includePassword: boolean = false
+  includePassword: boolean = true
 ) => {
   const selectedUser = await db.query.user.findFirst({
     where: eq(user.email, email),
     ...(includePassword && {
       columns: {
-        password: false,
+        password: true,
       },
     }),
   });

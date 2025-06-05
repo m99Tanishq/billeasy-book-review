@@ -7,9 +7,9 @@
   "scripts": {
     "start": "NODE_ENV=production npx tsx build/index.js",
     "dev": "npx tsx watch src/index.ts",
-    "db:generate": "npx drizzle-kit generate --config=drizzle.config.be.json",
+    "db:generate": "npx drizzle-kit generate --config=drizzle.config.json",
     "db:migrate": "npx tsx db/migrate.ts",
-    "db:push": "npx drizzle-kit push  --config=drizzle.config.be.json",
+    "db:push": "npx drizzle-kit push  --config=drizzle.config.json",
     "db:reset": "npx tsx db/reset.ts"
   },
   "author": "tanishq",

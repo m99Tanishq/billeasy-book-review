@@ -10,8 +10,8 @@ import { client } from "./client.model";
 import { relations } from "drizzle-orm";
 
 export const user = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: serial("user_id").notNull(),
+  id: uuid("id").unique().defaultRandom(),
+  userId: serial("user_id").primaryKey(),
   name: varchar("name").notNull(),
   email: varchar("email").notNull(),
   password: varchar("password").notNull(),
